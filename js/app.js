@@ -33,12 +33,9 @@
 			visibility: 'all'
 		},
 
-		// watch todos change for localStorage persistence
-		watch: {
-			todos: {
-				deep: true,
-				handler: todoStorage.save
-			}
+		// lifecycle hook
+		created: function () {
+		  backend.read();
 		},
 
 		// computed properties
@@ -75,13 +72,18 @@
 				if (!value) {
 					return;
 				}
-				this.todos.push({ id: this.todos.length + 1, title: value, completed: false });
+				const draft = { title: value, completed: false };
+				this.todos.unshift(Object.assign({ id: this.todos.length + 1 }, draft));
+				todoStorage.save(this.todos);
+				backend.create(draft);
 				this.newTodo = '';
 			},
 
 			removeTodo: function (todo) {
 				var index = this.todos.indexOf(todo);
 				this.todos.splice(index, 1);
+				todoStorage.save(this.todos);
+				backend.delete(todo);
 			},
 
 			editTodo: function (todo) {
@@ -97,7 +99,11 @@
 				todo.title = todo.title.trim();
 				if (!todo.title) {
 					this.removeTodo(todo);
+					backend.delete(todo);
+					return;
 				}
+				todoStorage.save(this.todos);
+				backend.update(todo);
 			},
 
 			cancelEdit: function (todo) {
@@ -106,7 +112,15 @@
 			},
 
 			removeCompleted: function () {
+				const completed = filters.completed(this.todos);
 				this.todos = filters.active(this.todos);
+				todoStorage.save(this.todos);
+				completed.forEach(todo => backend.delete(todo));
+				/*
+				completed.forEach(function(todo) {
+					backend.delete(todo);
+				});
+				*/
 			}
 		},
 
