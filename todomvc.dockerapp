@@ -1,0 +1,36 @@
+version: 0.1.0
+name: todomvc
+description: TodoMVC app with [Vue.js] frontend and [Go] backend.
+namespace: tullo
+maintainers:
+  - name: tullo
+    email: 
+---
+version: '3.7'
+
+services:
+  todo-frontend-vue:
+    build: .
+    image: todo-frontend-vue
+    ports:
+      - ${frontend.port}:${frontend.port}
+    environment:
+      - VUE_APP_BACKEND_HOST=http://todomvc.go:8080/todos/
+    deploy:
+      replicas: ${frontend.replicas}
+
+  todo-backend-golang:
+    hostname: todomvc.go
+    image: tullo/todo-backend-golang
+    ports:
+      -  ${backend.port}:${backend.port}
+    deploy:
+      replicas: ${backend.replicas}
+---
+# This section contains the default values for your application parameters.
+frontend:
+  port: 80
+  replicas: 1
+backend:
+  port: 8080
+  replicas: 1
