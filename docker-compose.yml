@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.7'
 
 services:
   todo-frontend-vue:
@@ -8,9 +8,13 @@ services:
       - 80:80
     environment:
       - VUE_APP_BACKEND_HOST=http://todomvc.go:8080/todos/
+    deploy:
+      replicas: 1
 
   todo-backend-golang:
     hostname: todomvc.go
     image: tullo/todo-backend-golang
     ports:
       - 8080:8080
+    deploy:
+      replicas: 1
