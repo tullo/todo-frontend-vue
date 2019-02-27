@@ -2,7 +2,7 @@
 
     'use strict';
 
-    const url = 'http://todomvc.go:8080/todos/';
+    const api = "$VUE_APP_BACKEND_HOST";
 
     const options = {
         mode: "cors", // no-cors, cors, *same-origin
@@ -21,7 +21,7 @@
                 },
                 body: JSON.stringify(todo), // body data type must match "Content-Type" header
             });
-            const response = await fetch(url, post_options);
+            const response = await fetch(api, post_options);
             var contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/json")) {
                 var createdTodo = await response.json();
@@ -37,7 +37,7 @@
             throw new TypeError("Oops, PATCH request failed! We haven't got any JSON!");
         },
         async read() {
-            const response = await fetch(url);
+            const response = await fetch(api);
             // response.headers.forEach(function(val, key) { console.log(key + ' -> ' + val); });
             var contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/json")) {
