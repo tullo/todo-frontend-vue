@@ -1,10 +1,10 @@
-FROM node:alpine as builder
+FROM node:13-alpine as builder
 USER node
 WORKDIR /home/node
 COPY . .
 RUN set -eux; yarn -s
 
-FROM nginx:1.15.8-alpine
+FROM nginx:1.17.8-alpine
 RUN apk add --no-cache tini
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /home/node .
