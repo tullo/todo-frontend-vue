@@ -1,0 +1,9 @@
+name: todo-frontend
+image: nginx:1.17.8-alpine
+command:
+- sh
+environment:
+  - VUE_APP_BACKEND_HOST=https://todo-backend-tullo.cloud.okteto.net/
+workdir: /usr/share/nginx/html
+forward:
+  - 80:80

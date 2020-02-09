@@ -2,5 +2,9 @@
 .dockerignore
 .git
 .gitignore
+.stignore
+docker-compose.yml
+okteto.yml
+todomvc.dockerapp
 README.md
 Dockerfile
