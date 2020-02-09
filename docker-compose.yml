@@ -2,8 +2,9 @@ version: '3.7'
 
 services:
   front:
+    hostname: todomvc.vue
     build: .
-    image: todo-frontend-vue
+    image: tullo/todo-frontend-vue
     ports:
       - 80:80
     environment:
@@ -16,6 +17,9 @@ services:
   backend:
     hostname: todomvc.go
     image: tullo/todo-backend-golang
+    environment: 
+      - ALLOWED_ORIGINS=http://todomvc.vue
+      - PORT=8080
     ports:
       - 8080:8080
     networks: 
