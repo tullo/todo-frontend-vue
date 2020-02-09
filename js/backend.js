@@ -2,7 +2,7 @@
 
     'use strict';
 
-    const api = "$VUE_APP_BACKEND_HOST";
+    const api = "${VUE_APP_BACKEND_HOST}";
 
     const options = {
         mode: "cors", // no-cors, cors, *same-origin
