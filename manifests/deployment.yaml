@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-frontend
+  labels:
+    app.kubernetes.io/component: todo-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-frontend
+  template:
+    metadata:
+      labels:
+        app: todo-frontend
+        app.kubernetes.io/component: todo-frontend
+    spec:
+      containers:
+      - image: tullo/todo-frontend-vue
+        imagePullPolicy: Always
+        name: todo-frontend
+        env:
+        - name: VUE_APP_BACKEND_HOST
+          value: https://todo-backend-tullo.cloud.okteto.net/todos/
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
