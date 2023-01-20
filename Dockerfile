@@ -1,4 +1,4 @@
-FROM node:13-alpine as builder
+FROM node:19-alpine as builder
 USER node
 WORKDIR /home/node
 COPY . .
