@@ -5,7 +5,7 @@ COPY . .
 # -s (silent) skip yarn console logs
 RUN set -eux; yarn -s
 
-FROM nginx:1.28.0-alpine
+FROM nginx:1.29.0-alpine
 RUN apk add --no-cache tini
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /home/node .
